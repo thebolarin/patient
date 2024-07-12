@@ -5,6 +5,7 @@ import { Patient } from './interfaces/patient.interface';
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { MessageParser } from '../common/utils/message-parser.util';
 import { PatientRepository } from './patient.repository';
+import { ProcessMessageDto } from './dto/process-message.dto';
 
 describe('PatientController', () => {
   let controller: PatientController;
@@ -25,12 +26,13 @@ describe('PatientController', () => {
   });
 
   it('should parse a valid message', () => {
-    const req = {
-      rawBody: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
 ||DATA^TYPE|123456|P|2.5
 EVT|TYPE|20230502112233
 PRS|1|9876543210^^^Location^ID||Smith^John^A|||M|19800101|
-DET|1|I|^^MainDepartment^101^Room 1|Common Cold` };
+DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
+    };
 
     const patient: Patient = {
       fullName: { lastName: 'Smith', firstName: 'John', middleName: 'A' },
@@ -40,22 +42,24 @@ DET|1|I|^^MainDepartment^101^Room 1|Common Cold` };
 
     jest.spyOn(service, 'processMessage').mockReturnValue(patient);
 
-    expect(controller.processMessage(req)).toEqual(patient);
+    expect(controller.processMessage(body)).toEqual(patient);
   });
 
   it('should throw error when parsing fails', () => {
-    const req = {
-      rawBody: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+const body: ProcessMessageDto = {
+  message: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
 ||DATA^TYPE|123456|P|2.5
 EVT|TYPE|20230502112233
 PRS|1|9876543210|||M|19800101|
-DET|1|I|^^MainDepartment^101^Room 1|Common Cold` };
+DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
+};
+
 
     jest.spyOn(service, 'processMessage').mockImplementation(() => {
       throw new HttpException('Invalid message format', HttpStatus.BAD_REQUEST);
     });
 
-    expect(() => controller.processMessage(req)).toThrow(HttpException);
+    expect(() => controller.processMessage(body)).toThrow(HttpException);
   });
 
   it('should get all stored parsed messages', () => {

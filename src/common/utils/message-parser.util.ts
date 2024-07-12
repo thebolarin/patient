@@ -6,9 +6,8 @@ export class MessageParser {
         const segments = message.split('\n');
         const patientSegment = segments.find(seg => seg.startsWith('PRS'));
         const detailsSegment = segments.find(seg => seg.startsWith('DET'));
-
         if (!patientSegment || !detailsSegment) {
-            throw new HttpException('Required segments are missing.', HttpStatus.BAD_REQUEST);
+            throw new HttpException('Required segments (PRS OR DET) missing.', HttpStatus.BAD_REQUEST);
         }
 
         const patientFields = patientSegment.split('|');

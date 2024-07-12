@@ -1,6 +1,7 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { Patient } from './interfaces/patient.interface';
+import { ProcessMessageDto } from './dto/process-message.dto';
 
 @Controller('patients')
 export class PatientController {
@@ -12,8 +13,7 @@ export class PatientController {
   }
 
   @Post('process')
-  processMessage(@Req() req: any): Patient {
-    const message = req.rawBody;
-    return this.patientService.processMessage(message);
+    processMessage(@Body() processMessageDto: ProcessMessageDto): Patient {
+    return this.patientService.processMessage(processMessageDto);
   }
 }

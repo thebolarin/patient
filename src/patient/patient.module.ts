@@ -12,11 +12,8 @@ import { PatientRepository } from './patient.repository';
 export class PatientModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(RawBodyMiddleware)
-      .exclude(
-        { path: '', method: RequestMethod.GET },
-      )
-      .forRoutes(
-        PatientController,
-      );
+    .forRoutes(
+      { path: 'patients/process', method: RequestMethod.POST },
+    );
   }
 }
