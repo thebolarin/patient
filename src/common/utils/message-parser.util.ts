@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import * as moment from 'moment';
 
 @Injectable()
 export class MessageParser {
@@ -47,6 +48,12 @@ export class MessageParser {
             throw new HttpException('Date of birth format is incorrect in PRS segment.', HttpStatus.BAD_REQUEST);
         }
 
-        return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
+        const formattedDate = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
+
+        if (!moment(formattedDate, 'YYYY-MM-DD', true).isValid()) {
+            throw new HttpException('Date of birth is invalid.', HttpStatus.BAD_REQUEST);
+        }
+
+        return formattedDate;
     }
 }
