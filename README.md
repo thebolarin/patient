@@ -10,11 +10,11 @@
 ## Table of Contents
 
 - [Overview](#overview)
+- [Project Structure](#project-structure)
 - [Installation](#installation)
 - [Running the application](#running-the-app)
 - [Testing](#testing)
 - [Objectives](#objectives)
-- [Project Structure](#project-structure)
 - [Separation of Concerns](#separation-of-concerns)
 - [Common Utilities](#common-utilities)
 - [Modularity and Maintainability](#modularity-and-maintainability)
@@ -25,6 +25,10 @@
 
 ## Overview
 In building a full application around the core functionality of processing structured plain-text messages containing patient information, we need to ensure a clear separation of concerns, modularity, maintainability, robust error handling, and scalability. NestJS, a progressive Node.js framework, provides a robust foundation for developing such an application due to its use of TypeScript, strong modular architecture, and dependency injection.
+
+## Project Stucture
+
+![The UML class diagram](./patient.drawio.png)
 
 ## Installation
 
@@ -73,12 +77,6 @@ $ npm run test:e2e
 - Simulate storing the extracted data without requiring a real database.
 - Provide the extracted data if everything is correct.
 - Return a meaningful error response if there are issues with the input.
-
-
-## Project Stucture
-
-![The UML class diagram](./patient.drawio.png)
-
 
 ## Separation of Concerns
 
