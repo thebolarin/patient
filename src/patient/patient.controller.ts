@@ -3,7 +3,7 @@ import { PatientService } from './patient.service';
 import { Patient } from './interfaces/patient.interface';
 import { ProcessMessageDto } from './dto/process-message.dto';
 
-@Controller('patients')
+@Controller('patient')
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
