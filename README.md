@@ -12,11 +12,11 @@
 - [Overview](#overview)
 - [Installation](#installation)
 - [Running the application](#running-the-app)
-- [Testing](#test)
+- [Testing](#testing)
 - [Objectives](#objectives)
 - [Project Structure](#project-structure)
-- [Separation of Concerns](#seperation-of-concerns)
-- [Common Utilities](#utilities)
+- [Separation of Concerns](#separation-of-concerns)
+- [Common Utilities](#common-utilities)
 - [Modularity and Maintainability](#modularity-and-maintainability)
 - [Error Handling and Logging](#error-handling-and-logging)
 - [Scalability and Future Extensions](#scalability-and-future-extensions)
@@ -76,6 +76,7 @@ $ npm run test:e2e
 
 
 ## Project Stucture
+
 ![The UML class diagram](./patient.drawio.png)
 
 
@@ -100,6 +101,7 @@ $ npm run test:e2e
     3. **Repository Pattern**: Use repositories for all database operations.
 
 ## Common Utilities
+
    - Utilities: Helper functions and utilities shared across the application, such as the message parsing logic.
     
     message-parser.util.ts contains functions to parse and validate message contents.This file contains the logic for parsing the incoming messages and ensure that the parsing correctly handles the format specified in the task and performs necessary validations.
