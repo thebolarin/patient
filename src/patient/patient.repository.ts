@@ -3,14 +3,14 @@ import { Patient } from './interfaces/patient.interface';
 
 @Injectable()
 export class PatientRepository {
-  private patients = [];
+  private patients: Patient[] = [];
 
-  save(patientData: Patient) {
+  save(patientData: Patient): Patient {
     this.patients.push(patientData);
     return patientData;
   }
 
-  findAll() {
+  findAll(): Patient[] {
     return this.patients;
   }
 }

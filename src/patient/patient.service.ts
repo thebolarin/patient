@@ -18,7 +18,7 @@ export class PatientService {
   }
 
   getAllPatients(): Patient[] {
-    const patients = this.patientRepository.findAll()
+    const patients: Patient[] = this.patientRepository.findAll()
     return patients
   }
 }

@@ -27,7 +27,9 @@ export class AllExceptionsFilter implements ExceptionFilter {
       message
     };
 
-    console.error('Exception caught by AllExceptionsFilter:', exception);
+    if(httpStatus === HttpStatus.INTERNAL_SERVER_ERROR){
+      console.error('Exception caught by AllExceptionsFilter:', exception);
+    }
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);
   }

@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PatientRepository } from './patient.repository';
+import { Patient } from './interfaces/patient.interface';
 
 describe('PatientRepository', () => {
   let repository: PatientRepository;
@@ -17,7 +18,7 @@ describe('PatientRepository', () => {
   });
 
   it('should save patient data correctly', () => {
-    const patientData = {
+    const patientData: Patient = {
       fullName: {
         lastName: 'Doe',
         firstName: 'Jane',
@@ -35,7 +36,7 @@ describe('PatientRepository', () => {
   });
 
   it('should retrieve all patient data correctly', () => {
-    const patientData1 = {
+    const patientData1: Patient = {
       fullName: {
         lastName: 'Doe',
         firstName: 'Jane',
@@ -45,7 +46,7 @@ describe('PatientRepository', () => {
       primaryCondition: 'Flu',
     };
 
-    const patientData2 = {
+    const patientData2: Patient = {
       fullName: {
         lastName: 'Smith',
         firstName: 'John',
