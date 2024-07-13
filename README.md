@@ -11,13 +11,16 @@
 
 - [Overview](#overview)
 - [Installation](#installation)
+- [Running the application](#running-the-app)
+- [Testing](#test)
 - [Objectives](#objectives)
 - [Project Structure](#project-structure)
 - [Separation of Concerns](#seperation-of-concerns)
+- [Common Utilities](#utilities)
 - [Modularity and Maintainability](#modularity-and-maintainability)
 - [Error Handling and Logging](#error-handling-and-logging)
 - [Scalability and Future Extensions](#scalability-and-future-extensions)
-- [Running the application](#scalability-and-future-extensions)
+- [Project Summary](#summary)
 
 
 ## Overview
@@ -51,7 +54,7 @@ To set up the Patient Message Processing Service with Nest.js, follow these step
   $ npm run start:prod
   ```
 
-## Test
+## Testing
 
 ```bash
 # unit tests
