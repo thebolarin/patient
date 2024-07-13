@@ -76,7 +76,7 @@ $ npm run test:e2e
 
 
 ## Project Stucture
-![The UML class diagram](./patient.png)
+![The UML class diagram](./patient.drawio.png)
 
 
 ## Separation of Concerns
