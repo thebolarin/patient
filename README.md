@@ -28,7 +28,7 @@ In building a full application around the core functionality of processing struc
 
 ## Project Stucture
 
-![The UML class diagram](./patient.drawio.png)
+![The UML class diagram](./patient.png)
 
 ## Installation
 
