@@ -22,13 +22,13 @@ describe('PatientService', () => {
   });
 
   it('should parse message correctly', () => {
-const body: ProcessMessageDto = {
-  message: `MSG|^~\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
 ||DATA^TYPE|123456|P|2.5
 EVT|TYPE|20230502112233
 PRS|1|9876543210^^^Location^ID||Smith^John^A|||M|19800101|
 DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
-};
+    };
 
     const result: Patient = {
       fullName: {
@@ -44,13 +44,13 @@ DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
   });
 
   it('should store and fetch parsed message correctly', () => {
-const body: ProcessMessageDto = {
-  message: `MSG|^~\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
 ||DATA^TYPE|123456|P|2.5
 EVT|TYPE|20230502112233
 PRS|1|9876543210^^^Location^ID||Smith^John^A|||M|19800101|
 DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
-};
+    };
 
     expect(service.getAllPatients().length).toEqual(0);
     service.processMessage(body);
@@ -69,26 +69,62 @@ DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
     expect(() => service.processMessage(body)).toThrow(HttpException);
   });
 
+  it('should throw error when patient date of birth is missing', () => {
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+    ||DATA^TYPE|123456|P|2.5
+    EVT|TYPE|20230502112233
+    PRS|1|9876543210^^^Location^ID||Smith^John^A|||M||
+    DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
+    };
+
+    expect(() => service.processMessage(body)).toThrow(HttpException);
+  });
+
+  it('should throw error when patient first name is missing', () => {
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+        ||DATA^TYPE|123456|P|2.5
+        EVT|TYPE|20230502112233
+        PRS|1|9876543210^^^Location^ID||Smith^^A|||M|19800101|
+        DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
+    };
+
+    expect(() => service.processMessage(body)).toThrow(HttpException);
+  });
+
+  it('should throw error when patient last name is missing', () => {
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+            ||DATA^TYPE|123456|P|2.5
+            EVT|TYPE|20230502112233
+            PRS|1|9876543210^^^Location^ID||^John^A|||M|19800101|
+            DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
+    };
+
+    expect(() => service.processMessage(body)).toThrow(HttpException);
+  });
+
   it('should throw error when date of birth format is incorrect', () => {
-const body: ProcessMessageDto = {
-  message: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
 ||DATA^TYPE|123456|P|2.5
 EVT|TYPE|20230502112233
 PRS|1|9876543210^^^Location^ID||Smith^John^A|||M|1980-01-01|
 DET|1|I|^^MainDepartment^101^Room 1|Common Cold`
-};
+    };
 
     expect(() => service.processMessage(body)).toThrow(HttpException);
   });
 
   it('should throw error when DET segment is incomplete', () => {
-const body: ProcessMessageDto = {
-  message: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
+    const body: ProcessMessageDto = {
+      message: `MSG|^~\\&|SenderSystem|Location|ReceiverSystem|Location|20230502112233
 ||DATA^TYPE|123456|P|2.5
 EVT|TYPE|20230502112233
 PRS|1|9876543210^^^Location^ID||Smith^John^A|||M|19800101|
 DET|1|I`
-};
+    };
 
     expect(() => service.processMessage(body)).toThrow(Error);
   });

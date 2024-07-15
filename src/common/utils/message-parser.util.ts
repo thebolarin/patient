@@ -29,8 +29,28 @@ export class MessageParser {
         }
 
         const [lastName, firstName, middleName] = nameComponents
-        const dateOfBirth = this.formatDate(patientFields[8]);
+
+        if (!lastName) {
+            throw new HttpException('Patent last name is required', HttpStatus.BAD_REQUEST);
+        }
+
+        if (!firstName) {
+            throw new HttpException('Patent first name is required', HttpStatus.BAD_REQUEST);
+        }
+
+        const dateOfBirth = patientFields[8];
+
+        if (!dateOfBirth) {
+            throw new HttpException('Patent Date of Birth is required', HttpStatus.BAD_REQUEST);
+        }
+
+        const formattedDate = this.formatDate(dateOfBirth);
+
         const primaryCondition = detailsFields[4];
+
+        if (!primaryCondition) {
+            throw new HttpException('Patent primary condition is required', HttpStatus.BAD_REQUEST);
+        }
 
         return {
             fullName: {
@@ -38,7 +58,7 @@ export class MessageParser {
                 firstName,
                 middleName: middleName || undefined,
             },
-            dateOfBirth,
+            dateOfBirth: formattedDate,
             primaryCondition,
         };
     }
